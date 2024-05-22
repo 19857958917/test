@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="../js/jquery3.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form action="pay" method="get">
+    <div class="container" th:each="payInfo, itemStat: ${payInfo}">
+        <div class="row justify-content-center bg-light" style="height: 480px">
+            <div class="align-self-center">
+                <div class="row ">
+                    <div class="col-xl-4 ">
+                        <label>车牌号码:</label>
+                        <input type="text" maxlength="9" class="form-control"  id="car_code" name="car_code"
+                               th:value="${payInfo.car_code}" readonly />
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xl-4">
+                        <label>入场时间:</label>
+                        <input type="text" maxlength="18" class="form-control"  id="entertime"
+                               name="entertime" th:value="${payInfo.entertime}" readonly />
+                    </div>
+                    <div class="col-xl-4">
+                        <label>出场时间:</label>
+                        <input type="text" maxlength="16" class="form-control" id="outtime"
+                               name="outtime" th:value="${payInfo.outtime}" readonly />
+                    </div>
+                    <div class="col-xl-4">
+                        <label>停车时长:</label>
+                        <input type="text" maxlength="32" class="form-control"  id="parttime"
+                               name="parttime" th:value="${payInfo.parttime}" readonly />
+                    </div>
+                </div>
+                <div class="col-xl-4" style="width: 500px;margin-top: 30px" th:each="userinfo, itemStat: ${user_info}" th:if="${userinfo.level == 1}">
+                    <div>
+                        <a>会员权益折扣：6元</a>
+                        <input type="checkbox" th:id="zhekou1" th:name="zhekou1" value="6" style="float: right;"/>
+                    </div>
+                </div>
+                <div class="col-xl-4" style="width: 500px;margin-top: 10px" th:each="userinfo, itemStat: ${user_info}">
+                    <div th:if="${userinfo.integral>9}">
+                        <a>积分抵扣：1元</a>
+                        <input type="checkbox" th:id="zhekou2" th:name="zhekou2" value="1" style="float: right"/>
+                    </div>
+                    <div th:unless="${userinfo.integral>9}">
+                        <a>积分抵扣：</a>
+                        <a style="float: right;color: red;">积分不足</a>
+                    </div>
+                </div>
+                <div class="row justify-content-center bg-light mt-3" id="btns">
+                    <div class="col-xl-4 text-center" >
+                        <button class="btn btn-primary" id="btn_ok">支付</button>
+                    </div>
+                </div>
+                <input type="text" maxlength="32" th:id="pay_id" th:name="pay_id" class="form-control" th:value="${payInfo.pay_id}" hidden />
+            </div>
+        </div>
+    </div>
+    <input type="text" maxlength="32" th:id="user_code" th:name="user_code" class="form-control" th:value="${user_code}" hidden />
+
+</form>
+</body>
+</html>

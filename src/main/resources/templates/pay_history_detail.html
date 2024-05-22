@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="../js/jquery3.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <form action="back_pay_history" method="get">
+        <input type="text" maxlength="9" class="form-control"  id="user_code" name="user_code" th:value="${user_code}" readonly hidden/>
+        <div class="container" th:each="payInfo, itemStat: ${payInfo}">
+            <div class="row justify-content-center bg-light" style="height: 480px">
+                <div class="align-self-center">
+                    <div class="row ">
+                        <div class="col-xl-4 ">
+                            <label>车牌号码:</label>
+                            <input type="text" maxlength="9" class="form-control"  id="car_code" name="car_code"
+                                   th:value="${payInfo.car_code}" readonly />
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xl-4">
+                            <label>入场时间:</label>
+                            <input type="text" maxlength="18" class="form-control"  id="entertime"
+                                   name="entertime" th:value="${payInfo.entertime}" readonly />
+                        </div>
+                        <div class="col-xl-4">
+                            <label>出场时间:</label>
+                            <input type="text" maxlength="16" class="form-control" id="outtime"
+                                   name="outtime" th:value="${payInfo.outtime}" readonly />
+                        </div>
+                        <div class="col-xl-4">
+                            <label>停车时长:</label>
+                            <input type="text" maxlength="32" class="form-control"  id="parttime"
+                                   name="parttime" th:value="${payInfo.parttime}" readonly />
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xl-4">
+                            <label>应缴费用:（元）</label>
+                            <input type="text" maxlength="18" class="form-control"  id="money"
+                                   name="money" th:value="${payInfo.money}" readonly />
+                        </div>
+                        <div class="col-xl-4">
+                            <label>折扣:（元）</label>
+                            <input type="text" maxlength="16" class="form-control" id="zhekou"
+                                   name="zhekou" th:value="${payInfo.zhekou}" readonly />
+                        </div>
+                        <div class="col-xl-4">
+                            <label>实际缴纳:（元）</label>
+                            <input type="text" maxlength="32" class="form-control"  id="last_pay"
+                                   name="last_pay" th:value="${payInfo.last_pay}" readonly />
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xl-4">
+                            <label>缴费时间:</label>
+                            <input type="text" maxlength="18" class="form-control"  id="pay_time"
+                                   name="pay_time" th:value="${payInfo.pay_time}" readonly />
+                        </div>
+                    </div>
+                    <div class="row justify-content-center bg-light mt-3" id="btns">
+                        <div class="col-xl-4 text-center" >
+                            <button class="btn btn-primary" id="btn_ok">返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

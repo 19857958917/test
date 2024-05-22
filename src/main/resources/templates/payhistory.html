@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="../js/jquery3.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div style="font-size: 20px">
+        <a th:href="@{back2(user_code=${user_code})}">返回</a>
+    </div>
+    <div>
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <tr>
+                <th>姓名</th>
+                <th>车牌号</th>
+                <th>入库时间</th>
+                <th>出库时间</th>
+                <th>停车时长</th>
+                <th>状态</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <div th:each="payhistory, itemStat: ${payhistorylist}" th:if="${payhistory.state==0}">
+                <tr>
+                    <td th:text="${payhistory.user_name}"></td>
+                    <td th:text="${payhistory.user_code}"></td>
+                    <td th:text="${payhistory.entertime}"></td>
+                    <td th:text="${payhistory.outtime}"></td>
+                    <td th:text="${payhistory.parttime}"></td>
+                    <td style="color: red;">未支付</td>
+                    <td>
+                        <a th:href="@{to_pay(pay_id=${payhistory.pay_id},user_code=${user_code})}">支付</a>
+                    </td>
+                    <td></td>
+                </tr>
+            </div>
+            <div th:each="payhistory, itemStat: ${payhistorylist}" th:if="${payhistory.state!=0}">
+                <tr>
+                    <td th:text="${payhistory.user_name}"></td>
+                    <td th:text="${payhistory.user_code}"></td>
+                    <td th:text="${payhistory.entertime}"></td>
+                    <td th:text="${payhistory.outtime}"></td>
+                    <td th:text="${payhistory.parttime}"></td>
+                    <td th:if="${payhistory.user_code == payhistory.who_pay}" style="color: rgba(50,212,48,0.74);">已支付</td>
+                    <td th:unless="${payhistory.user_code == payhistory.who_pay}" style="color: rgba(50,212,48,0.74);">代人支付</td>
+                    <td>
+                        <a th:href="@{get_detail(pay_id=${payhistory.pay_id},user_code=${user_code})}">详情</a>
+                    </td>
+                    <td>
+                        <a th:href="@{delete_history(pay_id=${payhistory.pay_id},user_code=${user_code})}">删除</a>
+                    </td>
+                </tr>
+            </div>
+        </table>
+    </div>
+</body>
+</html>

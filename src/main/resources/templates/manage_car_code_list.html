@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="../js/jquery3.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+<!--    <script>-->
+<!--        function deletecar() {-->
+<!--            var flag = window.confirm("删除的车牌将无法享受会员权益，确定删除吗？")-->
+<!--            if(flag){-->
+<!--                window.location.href="method=delete_car_code&car_code="+car_code;-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+    <script>
+        function indicate() {
+            window.confirm("您可添加的车牌号码已达上限，不可添加")
+        }
+    </script>
+</head>
+<body>
+    <div style="font-size: 20px">
+        <a th:href="@{back2(user_code=${user_code})}">返回</a>
+    </div>
+    <div th:each="user, itemStat: ${user_info}">
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <div th:each="usercarinfo, itemStat: ${user_car_info}">
+                <tr>
+                    <th>姓名</th>
+                    <th>车牌号</th>
+                    <th></th>
+                </tr>
+                <div>
+                    <tr>
+                        <td th:text="${user.user_name}"></td>
+                        <td th:text="${usercarinfo.car_code}"></td>
+                        <td>
+                            <a th:href="@{delete_car_code(car_code=${usercarinfo.car_code},user_code=${user_code})}">解绑</a>
+<!--                            href="javascript:deletecar('${usercarinfo.car_code}')"-->
+                        </td>
+                    </tr>
+                </div>
+                <tr style="height: 20px"></tr>
+            </div>
+        </table>
+        <text style="color: gray">温馨提示：普卡会员最多可添加3个车牌,金卡会员最多可添加5个车牌</text>
+        <br>
+        <text style="color: gray">每人每月可解绑一次</text>
+        <center>
+            <div th:if="${user.level==0}">
+                <div th:if="${car_code_number<3}">
+                    <a th:href="@{to_add_car_code(user_code=${user_code})}">添加车牌号码</a>
+                </div>
+                <div th:unless="${car_code_number<3}">
+                    <a href="javascript:indicate('${user_code}')">添加车牌号码</a>
+                </div>
+            </div>
+            <div th:if="${user.level==1}">
+                <div th:if="${car_code_number<5}">
+                    <a th:href="@{to_add_car_code(user_code=${user_code})}">添加车牌号码</a>
+                </div>
+                <div th:unless="${car_code_number<5}">
+                    <a href="javascript:indicate('${user_code}')">添加车牌号码</a>
+                </div>
+            </div>
+        </center>
+    </div>
+</body>
+</html>
